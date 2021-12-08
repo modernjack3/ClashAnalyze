@@ -1,16 +1,14 @@
-# This is a sample Python script.
+from src.analyzing.test import collect_matches
+from src.analyzing.test import compute_champion_win_rates
+import logging
+import cassiopeia as cass
+import os
 
-# Press Umschalt+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Strg+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('OK DAS IS NICE')
+    logging.basicConfig(level=logging.WARNING, force=True)
+    cass.apply_settings(os.path.join("..", "..", "..", "..", "..", "ClashAnalyze", "cassiopeia.json"))
+    matches = collect_matches(name="µDerAnonym", region="EUW", target_match_count=30)
+    champion_win_rates = compute_champion_win_rates(matches)
+    logging.warning(champion_win_rates)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

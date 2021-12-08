@@ -1,13 +1,18 @@
+import os
+
+import cassiopeia
 import psycopg2
 import logging
 from datetime import datetime
+import os
+from cassiopeia.data import Season, Queue
 
 
-class db_connector:
-
+class DbConnector:
     def __init__(self):
 
         # Read the config to connect to the database
+        print(os.listdir(os.path.join(".")))
         with open("creds.cfg", "r") as f:
             lines = f.readlines()
             address, db_name, user, password = [x.split(":")[1][:-1] for x in lines]
@@ -25,14 +30,17 @@ class db_connector:
 
         logging.info("Database Connection successful")
 
+    def insert_summoner_as_player(self, summoner: cassiopeia.Summoner):
+        self.insert_player(summoner.puuid, summoner.name, rank=5, region=summoner.region)
+
     # Insert a player to the player table -> datetime is optional - default is current time
     def insert_player(self, puuid: str, ign: str, rank: int, region: str,
                       date: str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")):
         cur = self.con.cursor()
 
         statement = "INSERT INTO players(puuid, ign, rank, region, last_update) VALUES('{0}','{1}','{2}','{3}','{4}')" \
-                    "ON CONFLICT (puuid) DO UPDATE SET ign='{1}', rank='{2}', region='{3}', last_update='{4}'"\
-                    .format(puuid, ign, str(rank), region, date)
+                    "ON CONFLICT (puuid) DO UPDATE SET ign='{1}', rank='{2}', region='{3}', last_update='{4}'" \
+            .format(puuid, ign, str(rank), region, date)
 
         cur.execute(statement)
         self.con.commit()
