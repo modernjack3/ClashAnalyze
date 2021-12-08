@@ -1,3 +1,5 @@
+import os.path
+
 import cassiopeia as cass
 from cassiopeia import Summoner, Match, MatchHistory
 from cassiopeia.data import Season, Queue
@@ -51,7 +53,7 @@ def compute_champion_win_rates(matches):
 
 
 if __name__ == "__main__":
-    cass.set_riot_api_key("---")
+    cass.apply_settings(os.path.join("..", "..", "..", "..", "..", "ClashAnalyze", "cassiopeia.json"))
     matches = collect_matches(name="µDerAnonym", region="EUW", target_match_count=50)
     champion_win_rates = compute_champion_win_rates(matches)
     print(champion_win_rates)
