@@ -1,0 +1,13 @@
+{
+  "global": {
+    "version_from_match": "patch",
+    "default_region": null,
+    "enable_ghost_loading": true
+  },
+  "plugins": {},
+    "DDragon": {},
+    "RiotAPI": {
+      "api_key": ""
+    }
+  }
+}
