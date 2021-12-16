@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Plot Tests</title>
+</head>
+<body>
+    {% autoescape off %}
+    {{ plot_div }}
+    {% endautoescape %}
+    <h1>Die id ist:  {{ puuid }} </h1>
+
+    <ul>
+    {% for mapEntry in occurrences %}
+<!--        {{ player }}: {{ num }}-->
+        <li> {{ mapEntry.name }} with {{ mapEntry.c }}</li>
+    {% endfor %}
+    </ul>
+
+</body>
+</html>
+
